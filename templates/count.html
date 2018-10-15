@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+</head>
+<body>
+    <h1>There are {{count}} words</h1>
+    <h1>Your text </h1>
+    {{ fulltext }}
+    
+
+ 
+
+    <h1> Frequency Distribution Top 20 unique words </h1>
+    <h3>Top words obtained filtering stopwords </h3>
+    {{ fdist_top20 }}
+    <br />
+
+    <h1> POS tagging </h1>
+    {{ pos_list }}
+
+    <h1>POS set</h1>
+    {{ pos_set }}
+
+    <h1>Top 20 Adjectives  </h1>
+    {{ fdist_JJ_top20 }}
+
+    <h1>Lemmatizer</h1> 
+    <h2> Adjectives</h2>
+    {{ lem_ADJ }}
+
+    <h2>Adverb </h2>
+    {{ lem_ADV }}
+
+    <h2>Verb</h2>
+    {{ lem_VERB }}
+</body>
+</html>         
+
+    

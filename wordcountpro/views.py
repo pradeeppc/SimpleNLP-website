@@ -4,6 +4,7 @@ import operator
 import nltk
 nltk.download('averaged_perceptron_tagger')
 nltk.download('wordnet')
+nltk.download('stopwords')
 
 import re
 from nltk.probability import FreqDist

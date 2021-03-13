@@ -2,20 +2,23 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import operator
 import nltk
+nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet')
 
 import re
 from nltk.probability import FreqDist
 from nltk.util import ngrams
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import TweetTokenizer
 
 def home(request):
     return render(request,'home.html')
+
 def count(request):
     fulltext = request.GET['fulltext']
     tknzr = TweetTokenizer() 
     review_tokens = tknzr.tokenize(fulltext)
-    print(len(fulltext))
     punctuation = re.compile(r'[-.?!,":;()|0-9]')
 
     review_tokens2 = []
@@ -33,29 +36,22 @@ def count(request):
         token = token.lower()
         if token not in stp_words:
             review_tokens3.append(token)
-    print(review_tokens3)
     
     fdist = FreqDist()
     for word in review_tokens3:
         fdist[word] += 1
     len(fdist)
     fdist_top20 = fdist.most_common(20)
-    print(fdist_top20)
 
     pos_list = []
     for token in review_tokens3:
         pos_list.append(nltk.pos_tag([token]))
     len(pos_list)
-    print(pos_list[1:20])
-    #len(pos_list)
-    #print(pos_list[10])
 
     pos_set = set()
     for pos in pos_list:
         pos_set.add(pos[0][1])
     len(pos_set)
-    print(pos_set)
-
  
     pos_JJ = []
     for each_POS in pos_list:
@@ -110,7 +106,4 @@ def count(request):
         else:
             worddict[word] = 1
     
-    # lem = ({'lem_ADJ[:10]':lem_ADJ[:10],'lem_ADV[:10]':lem_ADV[:10],'lem_VERB[:10]':lem_VERB[:10]})
-    #sortedwords=sorted(worddict.items(), key=operator.itemgetter(1),reverse=True)
-    #return render(request,'count.html',{'fulltext':fulltext,'count':len(wordlist),'sortedwords':sortedwords})
     return render(request,'count.html',{'fulltext':fulltext,'count':len(wordlist),'fdist_top20':fdist_top20,'pos_list':pos_list[1:20],'pos_set':pos_set,'pos_JJ':pos_JJ,'fdist_JJ_top20':fdist_JJ_top20,'lem_ADJ':lem_ADJ[1:10],'lem_ADV':lem_ADV[1:10],'lem_VERB':lem_VERB[1:10]})
